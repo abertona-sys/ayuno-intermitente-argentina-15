@@ -1,0 +1,77 @@
+import React from 'react';
+import { ProgressBar } from './ProgressBar';
+
+interface QuizHydrationScreenProps {
+  onNext: (hydration: string) => void;
+  onBack: () => void;
+}
+
+const BackIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+  </svg>
+);
+
+export const QuizHydrationScreen: React.FC<QuizHydrationScreenProps> = ({ onNext, onBack }) => {
+  const options = [
+    { id: 'almost_nothing', label: 'Casi nada (solo café, té o gaseosas)', emoji: '☕' },
+    { id: '1_2_glasses', label: '1 - 2 vasos', emoji: '💧' },
+    { id: '3_5_glasses', label: '3 - 5 vasos (aprox. 1 litro)', emoji: '🥛' },
+    { id: '6_8_glasses', label: '6 - 8 vasos (aprox. 2 litros)', emoji: '🚰' },
+    { id: 'more_8_glasses', label: 'Más de 8 vasos', emoji: '🌊' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-[#E0F7FA] to-white flex flex-col items-center">
+      
+      {/* Header: Back Button & Progress Bar */}
+      <div className="w-full max-w-md px-4 mt-4 mb-6 flex items-end space-x-3">
+        <button 
+          onClick={onBack}
+          className="text-slate-400 hover:text-slate-600 transition-colors p-1 -ml-1 rounded-full hover:bg-slate-100 mb-0.5"
+          aria-label="Volver"
+        >
+          <BackIcon />
+        </button>
+        <ProgressBar currentStep={31} totalSteps={46} />
+      </div>
+
+      <div className="w-full max-w-md px-6 flex flex-col items-center text-center flex-grow pb-8">
+        
+        {/* Top Branding Eyebrow */}
+        <div className="mb-6 flex items-center justify-center space-x-1">
+          <span className="text-[#009688] font-bold text-lg sm:text-xl">
+            Ayuno intermitente
+          </span>
+          <span className="text-[#4DB6AC] font-light text-lg sm:text-xl">
+            a la Argentina
+          </span>
+        </div>
+
+        {/* Headline */}
+        <h2 className="text-2xl sm:text-3xl font-bold text-[#004D40] leading-tight mb-8">
+          ¿Cuánta agua bebes al día?
+        </h2>
+
+        {/* Options Stack */}
+        <div className="flex flex-col space-y-4 w-full">
+          {options.map((option) => (
+            <button 
+              key={option.id}
+              onClick={() => onNext(option.id)}
+              className="w-full bg-white py-6 px-6 rounded-2xl shadow-sm border border-slate-100 hover:border-[#4DB6AC] hover:shadow-md hover:bg-slate-50 transition-all duration-200 group flex items-center justify-between"
+            >
+              <span className="text-[#004D40] font-medium text-lg sm:text-xl text-left group-hover:scale-[1.02] transition-transform">
+                {option.label}
+              </span>
+              <span className="text-2xl transform group-hover:scale-110 transition-transform">
+                {option.emoji}
+              </span>
+            </button>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  );
+};
