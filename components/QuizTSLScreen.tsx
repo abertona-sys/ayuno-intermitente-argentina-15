@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from './Button';
+import { trackEvent } from '../utils/analytics';
 
 interface QuizTSLScreenProps {
   userName: string;
@@ -49,6 +50,14 @@ export const QuizTSLScreen: React.FC<QuizTSLScreenProps> = ({
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const handleBuyClick = () => {
+    trackEvent('purchase_initiated', {
+      value: 16999,
+      currency: 'ARS'
+    });
+    window.location.href = 'https://www.metodoguiasexpress.net/cart/43286306226382:1?storefront=true&discount=AYUNO50';
   };
 
   const digestionPhrases: Record<string, string> = {
@@ -245,10 +254,10 @@ export const QuizTSLScreen: React.FC<QuizTSLScreenProps> = ({
         {/* BLOCK 8: CTA */}
         <div className="w-full mb-8">
             <Button 
-                onClick={() => window.location.href = 'https://www.metodoguiasexpress.net/cart/43286306226382:1?storefront=true&discount=AYUNO50'} 
-                className="py-6 text-xl uppercase tracking-wide shadow-xl shadow-[#009688]/20"
+                onClick={handleBuyClick} 
+                className="py-6 text-xl uppercase tracking-wide shadow-xl shadow-[#00A650]/20 bg-[#00A650] hover:bg-[#008f45] text-white"
             >
-                👉 QUIERO MI PLAN PERSONALIZADO COMPLETO
+                👉 QUIERO MI PLAN PERSONALIZADO
             </Button>
         </div>
 
@@ -305,8 +314,8 @@ export const QuizTSLScreen: React.FC<QuizTSLScreenProps> = ({
         {/* BLOCK 13: Final CTA */}
         <div className="w-full mb-8">
             <Button 
-                onClick={() => window.location.href = 'https://www.metodoguiasexpress.net/cart/43286306226382:1?storefront=true&discount=AYUNO50'} 
-                className="py-6 text-xl uppercase tracking-wide shadow-xl shadow-[#009688]/20"
+                onClick={handleBuyClick} 
+                className="py-6 text-xl uppercase tracking-wide shadow-xl shadow-[#00A650]/20 bg-[#00A650] hover:bg-[#008f45] text-white"
             >
                 👉 QUIERO MI PLAN PERSONALIZADO
             </Button>
